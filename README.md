@@ -5,7 +5,7 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 
 ## PHP Laravel darbai
-Šioje repozitorijoje saugomi Laravel darbai
+Šioje saugykloje laikomi Laravel darbai
 
 
 
