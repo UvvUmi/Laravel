@@ -30,7 +30,7 @@
                     <td>{{ $student->address }}</td>
                     <td>{{ $student->city->name }}</td>
                     <td>{{ $student->asmens_kodas }}</td>
-                    <td> {{ $student->gimimo_data }}</td>
+                    <td>{{ $student->gimimo_data }}</td>
 
                     <td>
                         <a href="{{ route('students.edit', $student->id) }}" class="btn btn-primary btn-sm">Redaguoti</a>
