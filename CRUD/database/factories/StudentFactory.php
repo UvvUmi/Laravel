@@ -25,8 +25,9 @@ class StudentFactory extends Factory
             'phone' => $this->faker->phoneNumber,
             'city_id' => City::inRandomOrder()->first()->id ?? 1,
             'grupe_id' => Group::inRandomOrder()->first()->id ?? 1,
-            'asmens_kodas' => $this->faker->randomNumber(11, true),
-            'gimimo_diena' => $this->faker->date,
+            'asmens_kodas' => intval(strval($this->faker->randomNumber(9, true)) . strval($this->faker->randomNumber(2, true))),
+            'gimimo_data' => $this->faker->date,
+            
         ];
     }
 }

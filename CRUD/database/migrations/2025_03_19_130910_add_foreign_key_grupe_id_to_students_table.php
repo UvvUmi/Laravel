@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('students', function (Blueprint $table) {
             $table->foreignId('grupe_id')->constrained('groups');
-            $table->bigInteger('asmens_kodas')->unique();
+            $table->bigInteger('asmens_kodas');
             $table->date('gimimo_data');
         });
     }
