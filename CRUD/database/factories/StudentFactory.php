@@ -19,15 +19,15 @@ class StudentFactory extends Factory
     public function genIdNumber($birthdate, $gender): string
     {
         $identification_number = "";
-        $birth_year = intval(substr($birthdate, 0, -6));
+        $byear_ftwo = substr($birthdate, 0, 2);
 
-        if ($birth_year < 2000 && $gender == "M") 
+        if ($byear_ftwo == "19" && $gender == "M") 
             $identification_number .= "3";
-        else if ($birth_year < 2000 && $gender == "F")
+        else if ($byear_ftwo  == "19" && $gender == "F")
             $identification_number .= "4";
-        else if ($birth_year >= 2000 && $gender == "M")
+        else if ($byear_ftwo  == "20" && $gender == "M")
             $identification_number .= "5";
-        else if ($birth_year >= 2000 && $gender == "F")
+        else if ($byear_ftwo  == "20" && $gender == "F")
             $identification_number .= "6";
 
         $identification_number .= substr($birthdate, 2, -6).substr($birthdate, 5, -3).substr($birthdate, 8).strval($this->faker->randomNumber(3, true));
@@ -60,8 +60,8 @@ class StudentFactory extends Factory
     
     public function definition(): array
     {
-        $func_birth_date = $this->faker->date;
-        $func_gender = $this->faker->randomElement(['M', "F"]);
+        $row_birth_date = $this->faker->date;
+        $row_gender = $this->faker->randomElement(['M', "F"]);
         return [
             'name' => $this->faker->firstName,
             'surname' => $this->faker->lastName,
@@ -69,11 +69,10 @@ class StudentFactory extends Factory
             'phone' => $this->faker->phoneNumber,
             'city_id' => City::inRandomOrder()->first()->id ?? 1, // Priskiria atsitiktinį miestą
             'group_id' => Group::inRandomOrder()->first()->id ?? 1,
-            'birth_date' => $func_birth_date,
-            'gender'=> $func_gender,
-            'personal_number' => $this->genIdNumber($func_birth_date, $func_gender),
+            'birth_date' => $row_birth_date,
+            'gender'=> $row_gender,
+            'personal_number' => $this->genIdNumber($row_birth_date, $row_gender),
         ];
-
     }
 
 }

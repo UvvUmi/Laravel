@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('students', function (Blueprint $table) {
             $table->foreignId('group_id')->nullable()->constrained('groups')->onDelete('cascade');
-            $table->string('personal_number');
+            $table->char('personal_number', 11);
             $table->date('birth_date');
             $table->char('gender', 1);
         });
