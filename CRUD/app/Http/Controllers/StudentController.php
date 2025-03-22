@@ -5,22 +5,26 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Models\City;
+use App\Models\Group;
 
 
 class StudentController extends Controller
 {
+    // Rodyti visus studentus su miestais (index)
     public function index()
     {
-        $students = Student::with('city')->paginate(20);
+        $students = Student::with(['city', 'group'])->paginate(20);
         return view('students.index', compact('students'));
     }
 
+    // Formos rodymas naujam studentui sukurti
     public function create()
     {
         $cities = City::all();
         return view('students.create', compact('cities'));
     }
 
+    // Naujo studento įrašymas
     public function store(Request $request)
     {
         $request->validate([
@@ -35,30 +39,36 @@ class StudentController extends Controller
         return redirect()->route('students.index')->with('success', 'Studentas pridėtas!');
     }
 
+    // Redagavimo forma
     public function edit(Student $student)
     {
         $cities = City::all();
         return view('students.edit', compact('student', 'cities'));
     }
 
+    // Atnaujinti studento duomenis
     public function update(Request $request, Student $student)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'surname' => 'required|string|max:255',
-            'address' => 'required|string',
-            'phone' => 'required|string|max:20',
-            'city_id' => 'required|exists:cities,id',
-        ]);
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'surname' => 'required|string|max:255',
+        'address' => 'required|string',
+        'phone' => 'required|string|max:20',
+        'city_id' => 'required|exists:cities,id',
+    ]);
 
-        $student->update($request->only(['name', 'surname', 'address', 'phone', 'city_id']));
+    // Atnaujiname studento duomenis
+    $student->update($request->only(['name', 'surname', 'address', 'phone', 'city_id']));
 
-        return redirect()->route('students.index')->with('success', 'Studentas atnaujintas!');
-    }
+    // Peradresavimas į studentų sąrašą
+    return redirect()->route('students.index')->with('success', 'Studentas atnaujintas!');
+}
 
+    // Ištrinti studentą
     public function destroy(Student $student)
     {
         $student->delete();
         return redirect()->route('students.index')->with('success', 'Studentas ištrintas!');
     }
 }
+

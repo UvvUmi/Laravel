@@ -5,9 +5,6 @@ namespace Database\Seeders;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Database\Seeders\CitySeeder;
-use Database\Seeders\StudentSeeder;
-use Database\Seeders\GroupSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,16 +15,16 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-        $this->call(CitySeeder::class);
-        $this->call(GroupSeeder::class);
-        
-        $this->call(StudentSeeder::class);
-        
+       /* User::factory()->create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+        ]);*/
+           // Pirmiausia užpildome miestus
+           $this->call(CitySeeder::class);
+
+           $this->call(GroupSeeder::class);
+
+           // Tik tada užpildome studentus
+           $this->call(StudentSeeder::class);
     }
 }
-
-// php artisan migrate:fresh --seed

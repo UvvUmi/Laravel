@@ -1,22 +1,19 @@
 <?php
 
 namespace Database\Seeders;
+use App\Models\City;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\City;
 
 class CitySeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
-    public function run(): void
+    public function run()
     {
         $cities = ['Vilnius', 'Kaunas', 'Klaipėda', 'Šiauliai', 'Panevėžys'];
 
         foreach ($cities as $city) {
-            City::create(['name'=>$city]);
+            City::create(['name' => $city]);
         }
     }
 }

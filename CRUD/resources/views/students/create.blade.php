@@ -1,7 +1,5 @@
 @extends('layouts.layout')
 
-@section('title', 'Add Student')
-
 @section('content')
 <div class="container mt-4">
     <h2>Pridėti naują studentą</h2>

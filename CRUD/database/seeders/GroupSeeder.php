@@ -13,17 +13,13 @@ class GroupSeeder extends Seeder
      */
     public function run(): void
     {
-        $groups = ['PS24', 'PS23', 'PS22', 'IST24', 'IST23', 'IST22'];
+        $groups = ['IST24', 'IST23', 'IST22', 'PS24', 'PS23', 'PS22'];
 
         foreach ($groups as $group) {
-            Group::create(
-                [
-                    'pavadinimas' => $group,
-                    'kodas' => rand(100, 9999),
-                ]
-            );
+            Group::create([
+                "name" => $group,
+                "code" => rand(1000, 9999),
+            ]);
         }
-
-
     }
 }

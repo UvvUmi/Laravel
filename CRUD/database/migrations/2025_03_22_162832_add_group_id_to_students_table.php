@@ -12,9 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('students', function (Blueprint $table) {
-            $table->foreignId('grupe_id')->constrained('groups');
-            $table->bigInteger('asmens_kodas');
-            $table->date('gimimo_data');
+            $table->foreignId('group_id')->nullable()->constrained('groups')->onDelete('cascade');
+            $table->string('personal_number');
+            $table->date('birth_date');
+            $table->char('gender', 1);
         });
     }
 
@@ -24,7 +25,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('students', function (Blueprint $table) {
-            //
+            $table->dropForeign(['group_id']);
+            $table->dropColumn('group_id');
         });
     }
 };

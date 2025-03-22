@@ -1,20 +1,38 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<h1>CRUD pavyzdys 2025-03-13</h1>
+<b>Aprašymas: </b>
+Šis projektas yra Laravel  pagrindu sukurtas CRUD (Create, Read, Update, Delete) pavyzdys su studentų ir miestų duomenų valdymu.
+    Įdiegus sudaromos ir užpildomos dvi lentelės students (su faker 1000 įrašų) ir cities  (su 5 LT miestais)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+<b>Diegimas: </b>
+norint įdiegti projektą reikia atsisiųsti arba  naudoti git (https://git-scm.com/) per CMD:
+1. git clone https://github.com/ddonatas/laravel_2025_CRUD
+2. cd laravel_2025_CRUD
+3. composer install
+5. cp .env.example .env  << pavzydinis .env padaromas darbiniu, kadangi į github originalas NEKELIAMAS dėl saugumo
+6. php artisan key:generate  << uzpildomas key unikaliu kodu
+7. sukurti per phpMyAdmin DB pvz.: laravel_2025_CRUD 
+8. Sukonfogūruoti .env byloje  DB prisijungimą pvz:
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=laravelPS23
+    DB_USERNAME=root
+    DB_PASSWORD=
+9. php artisan migrate
+10. php artisan db:seed
+11. php artisan serve
 
-## Launch example
+<b> API / CRUD funkcionalumas</b>
+ Studentai
 
-1. composer install
-2. cp .env.example .env
-3. php artisan key:generate
-4. php artisan migrate(create database)
-5. php artisan db:seed(seed database)
+/students – Peržiūrėti visus studentus
+/students/create – Pridėti naują studentą
+/students/{id}/edit – Redaguoti studentą
+/students/{id} (DELETE) – Ištrinti studentą
 
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+<b>Naudojama  </b>
+Laravel 10
+MySQL 
+Bootstrap / Tailwind CSS
+Faker (testiniams duomenims)
+Eloquent ORM 
