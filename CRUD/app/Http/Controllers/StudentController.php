@@ -51,6 +51,7 @@ class StudentController extends Controller
 
         ]);
 
+
         return redirect()->route('students.index')->with('success', 'Studentas pridėtas!');
     }
 
@@ -75,16 +76,14 @@ class StudentController extends Controller
         'birth_date' => 'required|date',
         'gender'=> 'required|string|max:1',
     ]);
-
     // Atnaujiname studento duomenis
-    $request_array = $request->only(['name', 'surname', 'address', 'phone', 'city_id', 'group_id', 'birth_date', 'gender']);
-    if ($request_array != $student->only(['name', 'surname', 'address', 'phone', 'city_id', 'group_id', 'birth_date', 'gender'])) {
-        $student->update($request_array);
-        $student->update(['personal_number' => Student::genIdNumber($request->birth_date, $request->gender)]);
-    }
+    $student->update($request->only(['name', 'surname', 'address', 'phone', 'city_id', 'group_id', 'birth_date', 'gender']));
+
     // Peradresavimas į studentų sąrašą
     return redirect()->route('students.index')->with('success', 'Studentas atnaujintas!');
+
 }
+
 
     // Ištrinti studentą
     public function destroy(Student $student)
