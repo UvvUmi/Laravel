@@ -16,6 +16,18 @@ class StudentController extends Controller
         return view('students.index', compact('students'));
     }
 
+    public function trashed()
+    {
+        $students = Student::onlyTrashed()->paginate(20);
+        return view('students.trashed', compact('students'));
+    }
+
+    public function restore($id)
+    {
+        Student::withTrashed()->findOrFail($id)->restore();
+        return redirect()->route('students.trashed')->with('success', 'Studentas atkurtas!');
+    }
+
     // Formos rodymas naujam studentui sukurti
     public function create()
     {
@@ -89,7 +101,13 @@ class StudentController extends Controller
     public function destroy(Student $student)
     {
         $student->delete();
-        return redirect()->route('students.index')->with('success', 'Studentas ištrintas!');
+        return redirect()->route('students.index')->with('success', 'Studentas buvo pazymetas kaip ištrintas!');
+    }
+
+    public function forceDelete($id)
+    {
+        Student::withTrashed()->findOrFail($id)->forceDelete();
+        return redirect()->route('students.trashed')->with('success', 'Studentas pilnai istrintas!');
     }
 }
 

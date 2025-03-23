@@ -3,12 +3,13 @@
 @section('title', 'Student list')
 
 @section('content')
+    <a href={{ url('students/trashed') }}>View trashed</a>
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h2>Student list</h2>
         <a href="{{ route('students.create') }}" class="btn btn-success">Add student</a>
     </div>
 
-    <table class="table table-striped">
+    <table class="table table-striped table-hover table-dark">
         <thead>
             <tr>
             <th>ID</th>
