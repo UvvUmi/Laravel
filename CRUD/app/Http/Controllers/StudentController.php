@@ -21,7 +21,8 @@ class StudentController extends Controller
     public function create()
     {
         $cities = City::all();
-        return view('students.create', compact('cities'));
+        $groups = Group::all();
+        return view('students.create', compact('cities', 'groups'));
     }
 
     // Naujo studento įrašymas
@@ -33,6 +34,10 @@ class StudentController extends Controller
             'address' => 'required|string',
             'phone' => 'required|string|max:20',
             'city_id' => 'required|exists:cities,id',
+            'group_id' => 'required|exists:groups,id',
+            'personal_number' => 'required|string|max:11',
+            'birth_date' => 'required|date',
+            'gender'=> 'required|string|max:1',
         ]);
 
         Student::create($request->all());
@@ -43,7 +48,8 @@ class StudentController extends Controller
     public function edit(Student $student)
     {
         $cities = City::all();
-        return view('students.edit', compact('student', 'cities'));
+        $groups = Group::all();
+        return view('students.edit', compact('student', 'cities', 'groups'));
     }
 
     // Atnaujinti studento duomenis
@@ -55,10 +61,14 @@ class StudentController extends Controller
         'address' => 'required|string',
         'phone' => 'required|string|max:20',
         'city_id' => 'required|exists:cities,id',
+        'group_id' => 'required|exists:groups,id',
+        'personal_number' => 'required|string|max:11',
+        'birth_date' => 'required|date',
+        'gender'=> 'required|string|max:1',
     ]);
 
     // Atnaujiname studento duomenis
-    $student->update($request->only(['name', 'surname', 'address', 'phone', 'city_id']));
+    $student->update($request->only(['name', 'surname', 'address', 'phone', 'city_id', 'group_id', 'personal_number', 'birth_date', 'gender']));
 
     // Peradresavimas į studentų sąrašą
     return redirect()->route('students.index')->with('success', 'Studentas atnaujintas!');
