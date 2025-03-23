@@ -7,7 +7,6 @@ use App\Models\Student;
 use App\Models\City;
 use App\Models\Group;
 
-
 class StudentController extends Controller
 {
     // Rodyti visus studentus su miestais (index)
@@ -35,12 +34,23 @@ class StudentController extends Controller
             'phone' => 'required|string|max:20',
             'city_id' => 'required|exists:cities,id',
             'group_id' => 'required|exists:groups,id',
-            'personal_number' => 'required|string|max:11',
             'birth_date' => 'required|date',
             'gender'=> 'required|string|max:1',
         ]);
 
-        Student::create($request->all());
+        Student::create([
+            'name' => $request->name,
+            'surname' => $request->surname,
+            'address' => $request->address,
+            'phone' => $request->phone,
+            'city_id' => $request->city_id,
+            'group_id' => $request->group_id,
+            'birth_date' => $request->birth_date,
+            'gender' => $request->gender,
+            'personal_number' => Student::genIdNumber($request->birth_date, $request->gender),
+
+        ]);
+
         return redirect()->route('students.index')->with('success', 'Studentas pridėtas!');
     }
 
@@ -62,14 +72,16 @@ class StudentController extends Controller
         'phone' => 'required|string|max:20',
         'city_id' => 'required|exists:cities,id',
         'group_id' => 'required|exists:groups,id',
-        'personal_number' => 'required|string|max:11',
         'birth_date' => 'required|date',
         'gender'=> 'required|string|max:1',
     ]);
 
     // Atnaujiname studento duomenis
-    $student->update($request->only(['name', 'surname', 'address', 'phone', 'city_id', 'group_id', 'personal_number', 'birth_date', 'gender']));
-
+    $request_array = $request->only(['name', 'surname', 'address', 'phone', 'city_id', 'group_id', 'birth_date', 'gender']);
+    if ($request_array != $student->only(['name', 'surname', 'address', 'phone', 'city_id', 'group_id', 'birth_date', 'gender'])) {
+        $student->update($request_array);
+        $student->update(['personal_number' => Student::genIdNumber($request->birth_date, $request->gender)]);
+    }
     // Peradresavimas į studentų sąrašą
     return redirect()->route('students.index')->with('success', 'Studentas atnaujintas!');
 }

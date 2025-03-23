@@ -52,10 +52,10 @@
         </select>
     </div>
 
-    <div class="mb-3">
+    {{-- <div class="mb-3">
         <label for="personal_number" class="form-label">Personal Number</label>
         <input type="text" name="personal_number" class="form-control" value="{{ old('personal_number', $student->personal_number) }}" required>
-    </div>
+    </div> --}}
 
     <div class="mb-3">
         <label for="birth_date" class="form-label">Birth Date</label>
