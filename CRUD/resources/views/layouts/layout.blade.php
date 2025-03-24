@@ -7,10 +7,17 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="{{ url('/') }}">Student system</a>
-        </div>
+    <nav class="d-flex justify-content-center ms-4 mt-4 gap-5">
+        @auth
+            <a href="{{ route('students.index') }}">Studentai</a>
+            <form method="POST" action="{{ route('logout') }}" style="display: inline;">
+                @csrf
+                <button type="submit" class="">Atsijungti</button>
+            </form>
+        @else
+            <a href="{{ route('login') }}">Prisijungti</a>
+            <a href="{{ route('register') }}">Registruotis</a>
+        @endauth
     </nav>
 
     <div class="container-fluid mt-4">
