@@ -68,6 +68,11 @@
             </select>
         </div>
 
+        <div class="mb-3">
+            <label for="personal_number" class="form-label">Personal Number</label>
+            <input type="text" name="personal_number" class="form-control" required maxlength=11>
+        </div>
+
         <button type="submit" class="btn btn-success">Save</button>
     </form>
 </div>
