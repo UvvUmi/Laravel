@@ -4,6 +4,11 @@
 
 @section('content')
 <a href={{ url('/') }}>Go back</a>
+@if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+    </div>
+@endif
 <table class="table table-striped table-hover table-dark">
     <thead>
         <tr>

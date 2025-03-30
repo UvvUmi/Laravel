@@ -5,7 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\City;
 use App\Models\Group;
-use App\Models\Student;
+use App\Http\Controllers\StudentController;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Student>
@@ -31,7 +31,7 @@ class StudentFactory extends Factory
             'group_id' => Group::inRandomOrder()->first()->id ?? 1,
             'birth_date' => $row_birth_date,
             'gender'=> $row_gender,
-            'personal_number' => Student::genIdNumber($row_birth_date, $row_gender),
+            'personal_number' => StudentController::genIdNumber($row_birth_date, $row_gender),
         ];
     }
 

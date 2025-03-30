@@ -13,7 +13,7 @@ class StudentController extends Controller
 {
     // Rodyti visus studentus su miestais (index)
 
-    public function genIdNumber($birthdate, $gender): string
+    public static function genIdNumber($birthdate, $gender): string
     {
         $identification_number = "";
         $byear_ftwo = substr($birthdate, 0, 2);
@@ -99,6 +99,7 @@ class StudentController extends Controller
             'gender'=> 'required|string|max:1',
             'personal_number' => ['required', new ValidateIdNumber($request->birth_date, $request->gender)]
         ]);
+
         Student::create($request->all());
         return redirect()->route('students.index')->with('success', 'Studentas pridėtas!');
     }
@@ -113,9 +114,21 @@ class StudentController extends Controller
     }
 
     // Atnaujinti studento duomenis
-    public function update(StudentRequest $request, Student $student)
+    public function update(Request $request, Student $student)
     {
-        $student->update($request->validated());
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'surname' => 'required|string|max:255',
+            'address' => 'required|string',
+            'phone' => 'required|string|max:20',
+            'city_id' => 'required|exists:cities,id',
+            'group_id' => 'required|exists:groups,id',
+            'birth_date' => 'required|date',
+            'gender'=> 'required|string|max:1',
+            'personal_number' => ['required', new ValidateIdNumber($request->birth_date, $request->gender)]
+        ]);
+
+        $student->update($request->all());
         return redirect()->route('students.index')->with('success', 'Studentas atnaujintas!');
     }
 

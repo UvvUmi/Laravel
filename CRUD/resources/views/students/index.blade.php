@@ -6,6 +6,11 @@
     <a href={{ url('students/trashed') }}>View trashed</a>
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h2>Student list</h2>
+        @if(session("success"))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+            </div>
+        @endif
         <a href="{{ route('students.create') }}" class="btn btn-success">Add student</a>
     </div>
 
