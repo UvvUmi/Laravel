@@ -26,19 +26,22 @@ class ValidateIdNumber implements ValidationRule
         $birthdate_arr = explode("-", $birth_year);
 
         if (
-            substr($birthdate_arr[0], 0, 2) == "18" && $gender == "M" && substr($value, 0, 1) != "1" ||
-            substr($birthdate_arr[0], 0, 2) == "18" && $gender == "F" && substr($value, 0, 1) != "2" ||
-            substr($birthdate_arr[0], 0, 2) == "19" && $gender == "M" && substr($value, 0, 1) != "3" ||
-            substr($birthdate_arr[0], 0, 2) == "19" && $gender == "F" && substr($value, 0, 1) != "4" ||
-            substr($birthdate_arr[0], 0, 2) == "20" && $gender == "M" && substr($value, 0, 1) != "5" ||
-            substr($birthdate_arr[0], 0, 2) == "20" && $gender == "F" && substr($value, 0, 1) != "6" ||
-            substr($birthdate_arr[0], 2, 2) != substr($value, 1, 2) ||
-            $birthdate_arr[1] != substr($value, 3, 2) ||
-            $birthdate_arr[2] != substr($value, 5, 2)
-        ) { 
-            $fail('Asmens kodas neteisingas!'); 
-        };
- 
+            $gender != "F" && intval(substr($value, 0, 1)) % 2 == 0 
+            || 
+            $gender != "M" && intval(substr($value, 0, 1)) % 2 != 0 
+        ) { $fail("First number doesn't match gender"); }
+
+        if (
+            substr($birthdate_arr[0], 0, 2) == "18" && !in_array(substr($value, 0, 1), ["1", "2"]) ||
+            substr($birthdate_arr[0], 0, 2) == "19" && !in_array(substr($value, 0, 1), ["3", "4"]) ||
+            substr($birthdate_arr[0], 0, 2) == "20" && !in_array(substr($value, 0, 1), ["5", "6"])
+        ) { $fail("First birthday nums don't match first id number"); };
+        
+        if (
+            substr($birthdate_arr[0], 2, 2) != substr($value, 1, 2) 
+            || $birthdate_arr[1] != substr($value, 3, 2) 
+            || $birthdate_arr[2] != substr($value, 5, 2))
+        { $fail("Birthday doesn't match personal number"); } 
     }
 }
 
