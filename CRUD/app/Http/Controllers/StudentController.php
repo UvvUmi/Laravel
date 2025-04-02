@@ -142,7 +142,36 @@ class StudentController extends Controller
         $student->update($request->all());
 
         $modifiedData = $request->all();
-        Mail::to("daniilas.komogorcevas@stud.svako.lt")->send(new DataModified($modifiedData, $previousData));
+
+        //Mail::to("daniilas.komogorcevas@stud.svako.lt")->send(new DataModified($modifiedData, $previousData));
+
+        $modifiedString = "";
+        $previousString = "";
+
+        date_default_timezone_set('Europe/Riga');
+        $modDate = date("Y-m-d h:i:s"); 
+
+        $index = 0;
+        foreach($modifiedData as $key => $value) {
+            $modifiedString .= "{$key}: {$value}\n";
+
+            $curKey = strval(array_keys($previousData)[$index]);
+            $curValue = strval($previousData[$curKey]);
+            $previousString .= $curKey.": ".$curValue."\n";
+
+            $index++;
+        }
+        Mail::raw("Sveiki, Administratoriau!\n
+        Buvo atnaujinti egzistuojantys duomenys\n
+        Prieš atnaujinimą:\n
+        {$previousString}\n
+        Atnaujinti duomenys:\n
+        {$modifiedString}\n
+        Keitimo laikas ir data {$modDate}\n
+        OK 200",
+         function ($message) {
+                $message->to("daniilas.komogorcevas@stud.svako.lt")->subject('Duomenys atnaujinti');
+            });
 
         return redirect()->route('students.index')->with('success', 'Studentas atnaujintas!');
     }
