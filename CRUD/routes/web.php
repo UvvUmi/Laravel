@@ -2,14 +2,25 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\FormController;
 use App\Models\Student;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
 
 
 Route::resource('students', StudentController::class)->except("show");
 
 Route::get('/', function () {
     return redirect('/students');
+});
+Route::post('/submit-form', [FormController::class, 'submit'])->name('submit.form');
+Route::resource('form', FormController::class);
+Route::get('/test-email', function() {
+    Mail::raw('Hello, this is a test', function ($message){
+        $message->to('arizonatheythem@gmail.com')->subject('Laravel Test');
+    });
+
+    return redirect('/emailsent');
 });
 
 Route::get('/dashboard', function () {

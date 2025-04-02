@@ -8,6 +8,9 @@ use App\Models\City;
 use App\Models\Group;
 //use App\Http\Requests\StudentRequest;
 use App\Rules\ValidateIdNumber;
+use App\Mail\DataCreated;
+use App\Mail\DataModified;
+use Illuminate\Support\Facades\Mail;
 
 class StudentController extends Controller
 {
@@ -101,6 +104,12 @@ class StudentController extends Controller
         ]);
 
         Student::create($request->all());
+        
+        $newData = $request->all();
+
+        Mail::to("daniilas.komogorcevas@stud.svako.lt")->send(new DataCreated($newData));
+
+        
         return redirect()->route('students.index')->with('success', 'Studentas pridėtas!');
     }
 
@@ -128,7 +137,13 @@ class StudentController extends Controller
             'personal_number' => ['required', new ValidateIdNumber($request->birth_date, $request->gender)]
         ]);
 
+        $previousData = $student->getAttributes();
+
         $student->update($request->all());
+
+        $modifiedData = $request->all();
+        Mail::to("daniilas.komogorcevas@stud.svako.lt")->send(new DataModified($modifiedData, $previousData));
+
         return redirect()->route('students.index')->with('success', 'Studentas atnaujintas!');
     }
 

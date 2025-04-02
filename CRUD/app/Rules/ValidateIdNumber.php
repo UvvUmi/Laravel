@@ -44,4 +44,3 @@ class ValidateIdNumber implements ValidationRule
         { $fail("Birthday doesn't match personal number"); } 
     }
 }
-
