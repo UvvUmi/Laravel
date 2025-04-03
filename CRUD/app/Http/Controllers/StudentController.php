@@ -143,7 +143,7 @@ class StudentController extends Controller
 
         $modifiedData = $request->all();
 
-        //Mail::to("daniilas.komogorcevas@stud.svako.lt")->send(new DataModified($modifiedData, $previousData));
+        //Mail::to("")->send(new DataModified($modifiedData, $previousData));
 
         $modifiedString = "";
         $previousString = "";
@@ -170,7 +170,7 @@ class StudentController extends Controller
         Keitimo laikas ir data {$modDate}\n
         OK 200",
          function ($message) {
-                $message->to("daniilas.komogorcevas@stud.svako.lt")->subject('Duomenys atnaujinti');
+                $message->to("")->subject('Duomenys atnaujinti');
             });
 
         return redirect()->route('students.index')->with('success', 'Studentas atnaujintas!');
